@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El instituto programado</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#020a05;--ink:#C8FFD9;--pn:rgba(2,16,8,.84);--mut:#7FBF98;--ln:#12622F;--a:#00C46F;--c:#C6F135;--ok:#3DFF8A;--bad:#FF5C7A;--ac:#00FF7F;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Lexend,system-ui,sans-serif}
+main{max-width:980px;margin:0 auto;padding:24px 16px 56px}
+h1{font-size:clamp(1.9rem,6vw,3rem);line-height:1.05;margin:0 0 6px;font-weight:800}
+.sub{margin:0 0 18px;color:var(--mut)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{background:var(--pn);color:var(--ink);border:2px solid var(--ln);padding:8px 14px;font-size:.9rem}
+.tabs button.cur{border-color:var(--ac);background:var(--ac);color:#001a0c}
+.tabs button:disabled{opacity:.45;cursor:not-allowed}
+.tabs button.ok::after{content:" ✓"}
+.mis{background:var(--pn);border-left:6px solid var(--ac);border-radius:4px 14px 14px 4px;padding:14px 18px;margin-bottom:16px}
+.mis p{margin:0 0 .6em}.mis p:last-child{margin:0}
+.goal{color:var(--mut);font-size:.93rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.box{background:var(--pn);border:2px solid var(--ln);border-radius:14px;padding:14px}
+h2{font-size:1rem;margin:0 0 10px;font-weight:600}
+.pal{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pal button,.blk{color:#02150A;border-radius:10px;font:600 14px Lexend,sans-serif}
+.pal button{border:0;padding:9px 12px;cursor:pointer}
+.pal .a,.blk.a{background:var(--a)}.pal .c,.blk.c{background:var(--c);color:#1B1300}
+.prog{min-height:150px;border:2px dashed var(--ln);border-radius:12px;padding:10px;cursor:pointer}
+.prog.act{border-color:var(--ac)}
+.blk{margin:6px 0}
+.blk.a .hd{padding:8px 10px}
+.hd{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 10px}
+.hd input,.hd select{font:600 13px Lexend;border-radius:6px;border:1px solid var(--a);padding:3px 5px;background:#02150A;color:#9DFFC2}
+.hd input{width:44px}
+.x{margin-left:auto;background:rgba(0,0,0,.22);color:inherit;border:0;border-radius:6px;cursor:pointer;width:26px;height:26px;font-size:12px}
+.mouth{margin:0 8px 8px 18px;min-height:38px;padding:4px 8px;background:rgba(255,255,255,.32);border:2px dashed rgba(0,0,0,.25);border-radius:8px;font-weight:400;font-size:.85rem}
+.mouth.act{border-color:#1B2440;background:rgba(255,255,255,.55)}
+.hint{font-size:.85rem;color:var(--mut);margin:8px 0 0}
+button{font:600 15px Lexend,sans-serif;border:0;border-radius:10px;padding:11px 18px;cursor:pointer;background:var(--ac);color:#001a0c}
+button.alt{background:transparent;color:var(--ink);border:2px solid var(--ln)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.scene{min-height:130px;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;margin-bottom:10px}
+.chip{border:2px solid var(--ln);border-radius:999px;padding:6px 12px;font-size:.9rem}
+.chip.on{border-color:var(--c);background:rgba(229,154,23,.16)}
+.pots{display:flex;gap:6px;width:100%}
+.pot{flex:1;text-align:center;font-size:1.6rem;border:2px solid var(--ln);border-radius:10px;padding:4px 0;min-height:76px}
+.scn{font-weight:600;font-size:.9rem;margin-bottom:6px;color:var(--mut)}
+.res{padding:12px 14px;border-radius:10px;border:2px solid var(--ln);color:var(--mut)}
+.res.ok{border-color:var(--ok);color:var(--ink)}.res.bad{border-color:var(--bad);color:var(--ink)}
+.res b{display:block}.res.ok b{color:var(--ok)}.res.bad b{color:var(--bad)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+@media(max-width:760px){.how{grid-template-columns:1fr}}
+.how div{border:2px solid var(--ln);border-radius:12px;padding:10px 12px;font-size:.93rem}
+.how b{display:block;color:var(--ac)}
+ul.cc{padding-left:20px;margin:8px 0 14px}
+.big{font-size:1.5rem;font-weight:800;margin:0 0 6px}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.5;pointer-events:none}
+main{position:relative;z-index:1}
+.box,.mis{background:var(--pn);backdrop-filter:blur(3px);box-shadow:0 0 18px rgba(0,255,127,.14)}
+h1,.big{font-family:"Share Tech Mono",ui-monospace,monospace;color:var(--ac);text-shadow:0 0 12px rgba(0,255,127,.55)}
+h1::before{content:"> ";opacity:.7}
+h1::after{content:"_";animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){h1::after{animation:none}}
+.sub,.goal,.hint,.scn{font-family:"Share Tech Mono",ui-monospace,monospace}
+.tabs button{background:rgba(2,16,8,.88)}
+button{box-shadow:0 0 12px rgba(0,255,127,.35)}
+button.alt,.x{box-shadow:none}
+button.alt{color:var(--ink)}
+.prog,.chip,.pot,.how div{background:rgba(0,0,0,.35)}
+.chip.on{border-color:var(--c);background:rgba(198,241,53,.14);box-shadow:0 0 10px rgba(198,241,53,.3)}
+.blk{box-shadow:0 0 10px rgba(0,255,127,.25)}
+.tabs{align-items:center}
+.cur2{font-family:"Share Tech Mono",ui-monospace,monospace;color:var(--ac)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+@media(max-width:600px){.cards{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column;gap:2px;text-align:left;background:rgba(0,0,0,.4);color:var(--ink);border:2px solid var(--ln);box-shadow:none;padding:12px 14px}
+.card b{color:var(--ac)}.card span{font-size:.85rem;color:var(--mut)}
+.card i{font-style:normal;color:var(--c);letter-spacing:2px}
+.card em{font-style:normal;color:var(--ok);font-size:.85rem}
+.card.ok{border-color:var(--ok)}.card:hover{border-color:var(--ac)}
+.bar{height:12px;width:100%;border:2px solid var(--ln);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ac)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<canvas id="rain" aria-hidden="true"></canvas>
+<main>
+<h1>El instituto programado</h1>
+<p class="sub">Programa con bloques el centro educativo del futuro: domótica, robots y energía sostenible.</p>
+<section class="box" id="intro">
+ <p class="big">Tu misión</p>
+ <p>Es el año 2040 y el Instituto Horizonte funciona con domótica, robots y energía sostenible. Pero su cerebro, la IA Ágora, necesita que alguien le enseñe a tomar decisiones. Ese alguien eres tú, y vas a hacerlo programando con bloques, igual que en Scratch.</p>
+ <div class="how">
+  <div><b>1. Elige bloques</b>Pulsa los bloques de la paleta para añadirlos a tu programa.</div>
+  <div><b>2. Ejecuta</b>Pulsa «Ejecutar programa» y observa cómo reacciona la escena del instituto.</div>
+  <div><b>3. Corrige</b>Si algo falla, Ágora te dice qué ha pasado. Ajusta el programa y vuelve a probar.</div>
+ </div>
+ <p><b>Aprenderás:</b></p>
+ <ul class="cc"><li>Secuencias: el orden de las instrucciones importa.</li><li>Bucles: repetir sin copiar y pegar.</li><li>Condicionales: decidir según lo que detectan los sensores.</li><li>Condicionales anidados: decisiones dentro de otras decisiones.</li><li>Variables: guardar y actualizar datos.</li><li>Condiciones que dependen del valor de una variable.</li><li>Combinar bucles, giros, sensores y condicionales para guiar robots y automatizar tareas.</li></ul>
+ <p class="goal">9 retos · elige el orden que quieras · no necesitas experiencia previa.</p>
+ <div class="row"><button id="start">Empezar la misión</button></div>
+</section>
+<section class="box" id="hub" hidden>
+ <p class="big">Menú de retos</p>
+ <p class="goal">Elige el reto que quieras, en el orden que prefieras. Al superarlo volverás a este menú.</p>
+ <div class="cards" id="cards"></div>
+ <p class="goal" id="prog2"></p>
+ <div class="row"><button id="fin" hidden>Ver el final</button></div>
+</section>
+<div id="game" hidden>
+<div class="tabs" id="tabs"></div>
+<div class="mis" id="mis"></div>
+<div class="grid">
+ <div class="box">
+  <h2>Bloques (púlsalos para añadirlos)</h2>
+  <div class="pal" id="pal"></div>
+  <h2>Tu programa</h2>
+  <div class="prog" id="prog"></div>
+  <p class="hint" id="hint"></p>
+  <div class="row"><button class="alt" id="clear">Vaciar programa</button></div>
+ </div>
+ <div class="box">
+  <h2>Escena del instituto</h2>
+  <div class="scn" id="scn"></div>
+  <div class="scene" id="scene"></div>
+  <div class="row" style="margin:0 0 12px"><button id="run">Ejecutar programa</button><button id="next" hidden>Siguiente reto</button></div>
+  <div class="res" id="res" role="status">Construye tu programa y pulsa Ejecutar.</div>
+ </div>
+</div>
+</div>
+<section class="box" id="end" hidden>
+ <p class="big">¡El instituto ya está programado!</p>
+ <p><b>Ágora:</b> «Ya puedo decidir sola: preparo las aulas, cuido el huerto, guío a los robots, ahorro energía, clasifico el reciclaje y controlo el aforo de la biblioteca. Gracias por programarme.»</p>
+ <p>Has completado los nueve retos y has usado las ideas básicas de cualquier lenguaje de programación:</p>
+ <div class="how">
+  <div><b>Secuencia</b>Preparaste el aula en el orden correcto.</div>
+  <div><b>Bucles</b>Regaste el huerto y guiaste al robot por los pasillos con «repetir».</div>
+  <div><b>Condicionales</b>Luces, riego y modo ahorro responden a lo que detectan los sensores.</div>
+  <div><b>Variables</b>Cargaste la batería solar a 40 kWh partiendo de cualquier valor.</div>
+  <div><b>Condiciones y variables</b>Controlaste el aforo de la biblioteca sin superar el máximo.</div>
+  <div><b>Combinaciones</b>Clasificaste el reciclaje combinando un bucle con condicionales.</div>
+ </div>
+ <p class="goal">Reto extra: piensa en otra tarea de un instituto sostenible (el reciclaje, el riego, la ventilación) y escribe en papel qué bloques necesitaría.</p>
+ <div class="row"><button id="again">Jugar de nuevo</button></div>
+</section>
+</main>
+<script>
+var $=function(i){return document.getElementById(i)};
+var B={subir:"subir persianas",proy:"encender proyector",saludar:"decir «Buenos días»",luzon:"encender luces",luzoff:"apagar luces",calof:"apagar calefacción",regar:"regar maceta",avanzar:"avanzar una maceta",cero:"poner la batería a 0",sumar:"sumar 10 a la batería",restar:"restar 10 a la batería",riego:"abrir el riego",coger:"coger el siguiente objeto",azul:"echar al contenedor azul",amar:"echar al contenedor amarillo",verde:"echar al contenedor verde",mover:"avanzar un paso",girai:"girar a la izquierda",girad:"girar a la derecha",entrar:"dejar entrar a un alumno",rep:1,si:1};
+var C={poca:["hay poca luz",function(s){return s.luz=="poca"}],mucha:["hay mucha luz",function(s){return s.luz=="mucha"}],vacia:["el aula está vacía",function(s){return s.pres=="vacia"}],ocup:["el aula está ocupada",function(s){return s.pres=="ocup"}],seca:["la tierra está seca",function(s){return s.hum=="seca"}],humeda:["la tierra está húmeda",function(s){return s.hum=="humeda"}],papel:["el objeto es papel",function(s){return s.cur=="papel"}],plast:["el objeto es plástico",function(s){return s.cur=="plast"}],vidrio:["el objeto es vidrio",function(s){return s.cur=="vidrio"}],sitio:["hay sitio en la biblioteca",function(s){return s.aforo<4}],lleno:["la biblioteca está llena",function(s){return s.aforo>=4}]};
+function has(a,t){return a.some(function(n){return n.t==t||(n.k&&has(n.k,t))})}
+function act(t,s){if(t=="subir")s.pers=1;if(t=="proy")s.proy=1;if(t=="saludar")s.sal=1;if(t=="luzon")s.luces=1;if(t=="luzoff")s.luces=0;if(t=="calof")s.cal=0;
+ if(t=="regar")s.reg[s.pos]=1;if(t=="avanzar")s.pos=Math.min(s.pos+1,4);if(t=="cero")s.bat=0;if(t=="sumar")s.bat+=10;if(t=="restar")s.bat-=10;if(t=="riego")s.riego=1;
+ if(t=="coger"){s.idx++;s.cur=s.items[s.idx]||null}if((t=="azul"||t=="amar"||t=="verde")&&s.cur)s.out[s.idx]=t;
+ if(t=="entrar"&&s.fila>0){s.fila--;s.aforo++}
+ if(t=="mover"){var dx=[0,1,0,-1][s.d],dy=[-1,0,1,0][s.d],nx=s.x+dx,ny=s.y+dy;if(nx<0||ny<0||nx>4||ny>3||(nx==2&&ny==3))s.hit=1;else{s.x=nx;s.y=ny}}
+ if(t=="girai")s.d=(s.d+3)%4;if(t=="girad")s.d=(s.d+1)%4}
+var L=[
+{n:"Preparar el aula",t:"Secuencias",d:"★",s:`<p><b>Ágora:</b> «En 10 minutos llega 3.º A y el aula debe estar lista sin gastar energía de más.»</p><p>Primero deja entrar la luz natural, después enciende el proyector y por último saluda a la clase.</p>`,
+ g:"Concepto: una secuencia son instrucciones en orden. Cambiar el orden cambia el resultado.",
+ bl:["subir","proy","saludar","luzon"],cd:[],sc:[{n:"Lunes, 8:20",s:{pers:0,proy:0,sal:0,luces:0}}],
+ chk:function(t){if(t.indexOf("luzon")>=0)return"Ya entra luz natural: encender las luces gasta energía innecesaria.";
+  if(t.join()=="subir,proy,saludar")return null;return"El orden no es el correcto: primero persianas, luego proyector, después saludo."},
+ ok:"Aula lista: luz natural, proyector y saludo, sin gastar electricidad en luces."},
+{n:"El huerto de Brote",t:"Bucles",d:"★",s:`<p><b>Ágora:</b> «Brote, el robot hortelano, cuida el huerto del instituto con agua de lluvia recogida en la azotea. Hay 5 macetas en fila y Brote empieza en la primera.»</p><p>Hacerlo bloque a bloque sería repetitivo. Usa un bucle.</p>`,
+ g:"Concepto: un bucle repite instrucciones. Pulsa dentro del bloque «repetir» para añadir bloques en su interior.",
+ bl:["rep","regar","avanzar"],cd:[],sc:[{n:"Huerto, recreo",s:{reg:[0,0,0,0,0],pos:0}}],
+ chk:function(t,s,c,p){if(!has(p,"rep"))return"Resuélvelo con un bucle «repetir».";
+  var i=s.reg.indexOf(0);return i<0?null:"La maceta "+(i+1)+" se quedó sin regar. ¿Riegas antes o después de avanzar?"},
+ ok:"Las 5 macetas están regadas con solo dos bloques dentro de un bucle."},
+{n:"Luces automáticas",t:"Condicionales",d:"★★",s:`<p><b>Ágora:</b> «Las luces del aula deben decidir solas: si hay poca luz natural se encienden, y si hay mucha se apagan. Pruebo tu programa en dos situaciones distintas.»</p>`,
+ g:"Concepto: un condicional (si… entonces) ejecuta sus bloques solo cuando se cumple la condición. Tu programa debe funcionar en todas las escenas.",
+ bl:["si","luzon","luzoff"],cd:["poca","mucha"],
+ sc:[{n:"Lunes, 8:00 (luces apagadas)",s:{luz:"poca",pres:"ocup",luces:0}},{n:"Mediodía (luces encendidas)",s:{luz:"mucha",pres:"ocup",luces:1}}],
+ chk:function(t,s,c){var w=c.s.luz=="poca"?1:0;return s.luces==w?null:"En «"+c.n+"» las luces deberían quedar "+(w?"encendidas":"apagadas")+"."},
+ ok:"Las luces se adaptan solas a la luz del día. El instituto ya ahorra electricidad."},
+{n:"Modo ahorro",t:"Condicionales anidados",d:"★★★",s:`<p><b>Ágora:</b> «Activamos el modo ahorro. Si el aula está vacía, apaga luces y calefacción. Si está ocupada, usa luces solo cuando haga falta y deja la calefacción encendida.»</p>`,
+ g:"Concepto: condicionales anidados. Puedes poner un «si» dentro de otro «si». Pulsa dentro del bloque para añadir en su interior.",
+ bl:["si","luzon","luzoff","calof"],cd:["vacia","ocup","poca","mucha"],
+ sc:[{n:"Recreo (aula vacía)",s:{luz:"mucha",pres:"vacia",luces:1,cal:1}},{n:"Clase con poca luz",s:{luz:"poca",pres:"ocup",luces:0,cal:1}},{n:"Clase con mucha luz",s:{luz:"mucha",pres:"ocup",luces:1,cal:1}}],
+ chk:function(t,s,c){var o=c.s.pres=="ocup",wl=o&&c.s.luz=="poca"?1:0;
+  if(s.luces!=wl)return"En «"+c.n+"» las luces deberían quedar "+(wl?"encendidas":"apagadas")+".";
+  if(s.cal!=(o?1:0))return"En «"+c.n+"» la calefacción debería quedar "+(o?"encendida":"apagada")+".";return null},
+ ok:"Modo ahorro activado: cada aula gasta solo la energía que necesita."},
+{n:"Batería solar",t:"Variables",d:"★★",s:`<p><b>Ágora:</b> «Los paneles del tejado cargan la batería del instituto: cada hora suman 10 kWh. Necesito que la batería quede en exactamente 40 kWh para el simulacro de esta tarde.»</p><p>Ojo: la batería puede tener ya carga de antes.</p>`,
+ g:"Concepto: una variable guarda un valor que cambia. Antes de usarla conviene darle un valor inicial.",
+ bl:["cero","sumar","restar","rep"],cd:[],sc:[{n:"Batería con 25 kWh",s:{bat:25}},{n:"Batería con 90 kWh",s:{bat:90}}],
+ chk:function(t,s){if(s.bat==40)return null;if(t.indexOf("cero")<0)return"La batería ya tenía carga y has sumado encima. Empieza poniéndola a 0.";return"La batería terminó en "+s.bat+" kWh y debía quedar en 40."},
+ ok:"Batería a 40 kWh partiendo de cualquier valor: una variable bien inicializada da siempre el mismo resultado."},
+{n:"Riego inteligente",t:"Sensores y condicionales",d:"★★",s:`<p><b>Ágora:</b> «Regar con la tierra ya húmeda desperdicia agua. El sensor del huerto me dice si la tierra está seca. Abre el riego solo cuando haga falta. Comprobaré dos días distintos.»</p>`,
+ g:"Concepto: un sensor aporta información y el condicional decide con ella. Pulsa dentro del bloque «si» para añadir bloques en su interior.",
+ bl:["si","riego"],cd:["seca","humeda"],
+ sc:[{n:"Lunes, tras un fin de semana soleado",s:{hum:"seca",riego:0}},{n:"Martes, después de llover",s:{hum:"humeda",riego:0}}],
+ chk:function(t,s,c){var w=c.s.hum=="seca"?1:0;return s.riego==w?null:"En «"+c.n+"» el riego debería quedar "+(w?"abierto":"cerrado")+"."},
+ ok:"El huerto solo se riega cuando lo necesita: se ahorra agua cada semana."},
+{n:"Reciclaje inteligente",t:"Bucles y condicionales",d:"★★★",s:`<p><b>Ágora:</b> «La cinta de reciclaje trae 4 objetos. Cada vez que cojas uno, decide adónde va: el papel al contenedor azul, el plástico al amarillo y el vidrio al verde.»</p><p>Combina un bucle con condicionales. Los objetos llegan en distinto orden cada vez.</p>`,
+ g:"Concepto: dentro de un bucle, los condicionales tratan cada elemento de forma distinta. Pulsa dentro de cada bloque para añadir en su interior.",
+ bl:["rep","si","coger","azul","amar","verde"],cd:["papel","plast","vidrio"],
+ sc:[{n:"Cinta 1",s:{items:["papel","plast","vidrio","papel"],idx:-1,cur:null,out:[]}},{n:"Cinta 2",s:{items:["vidrio","vidrio","plast","papel"],idx:-1,cur:null,out:[]}}],
+ chk:function(t,s,c){var m={papel:"azul",plast:"amar",vidrio:"verde"},N={azul:"azul",amar:"amarillo",verde:"verde"},I={papel:"papel",plast:"plástico",vidrio:"vidrio"};
+  for(var i=0;i<c.s.items.length;i++){var it=c.s.items[i];if(s.out[i]!=m[it])return"En «"+c.n+"» el objeto "+(i+1)+" ("+I[it]+") debía ir al contenedor "+N[m[it]]+(s.out[i]?".":" y no se clasificó. ¿Has cogido todos los objetos?")}return null},
+ ok:"Cada objeto va a su contenedor, sea cual sea el orden. El instituto recupera materiales cada día."},
+{n:"Robot guía",t:"Bucles y giros",d:"★",s:`<p><b>Ágora:</b> «Beto, el robot guía, está en la entrada y debe llevar a las visitas hasta la biblioteca, en la esquina opuesta del instituto. Ojo con la mesa que bloquea el pasillo.»</p><p>Beto empieza mirando a la derecha. Usa bucles para no repetir el mismo bloque muchas veces.</p>`,
+ g:"Concepto: combinar movimientos y giros dentro de bucles. Pulsa dentro del bloque «repetir» para añadir bloques en su interior.",
+ bl:["rep","mover","girai","girad"],cd:[],sc:[{n:"Planta baja",s:{x:0,y:3,d:1,hit:0}}],
+ chk:function(t,s,c,p){if(s.hit)return"Beto chocó con la mesa. Busca otro camino.";if(s.x==4&&s.y==0)return has(p,"rep")?null:"Resuélvelo con un bucle «repetir».";return"Beto terminó en la columna "+(s.x+1)+", fila "+(s.y+1)+" y debía llegar a la biblioteca (columna 5, fila 1)."},
+ ok:"Beto llegó a la biblioteca sin tropezar: movimientos y giros bien combinados."},
+{n:"Aforo de la biblioteca",t:"Condiciones y variables",d:"★★★",s:`<p><b>Ágora:</b> «La biblioteca admite como máximo 4 personas a la vez. Hay alumnos esperando en la puerta y yo llevo la cuenta de cuántos hay dentro. Deja entrar solo mientras haya sitio.»</p><p>El número de alumnos en espera cambia cada día, así que tu programa debe funcionar con cualquier fila.</p>`,
+ g:"Concepto: una condición puede depender del valor de una variable (aquí, cuántas personas hay dentro). Pulsa dentro de cada bloque para añadir bloques en su interior.",
+ bl:["rep","si","entrar"],cd:["sitio","lleno"],
+ sc:[{n:"Hora tranquila (3 alumnos)",s:{fila:3,aforo:0}},{n:"Hora punta (7 alumnos)",s:{fila:7,aforo:0}}],
+ chk:function(t,s,c){var w=Math.min(4,c.s.fila);if(s.aforo>4)return"En «"+c.n+"» entraron "+s.aforo+" personas y el máximo es 4. Comprueba que haya sitio antes de dejar entrar.";return s.aforo==w?null:"En «"+c.n+"» dentro deberían quedar "+w+" personas y hay "+s.aforo+". Repite lo bastante para atender a toda la fila."},
+ ok:"El aforo nunca pasa de 4 y entra toda la gente que cabe: una condición sobre una variable ha hecho el trabajo."}];
+var lv=0,prog=[],target=prog,done=[],busy=false;
+var sleep=function(ms){return new Promise(function(r){setTimeout(r,matchMedia("(prefers-reduced-motion: reduce)").matches?0:ms)})};
+function chip(t,on){return'<span class="chip'+(on?" on":"")+'">'+t+"</span>"}
+function R(s){var h="";
+ if(lv==0)h=chip("🪟 Persianas "+(s.pers?"abiertas":"cerradas"),s.pers)+chip("📽️ Proyector "+(s.proy?"encendido":"apagado"),s.proy)+chip(s.sal?"👋 «Buenos días»":"👋 sin saludo",s.sal);
+ else if(lv==1){h='<div class="pots">';for(var i=0;i<5;i++)h+='<div class="pot">'+(s.pos==i?"🤖":"&nbsp;")+"<br>"+(s.reg[i]?"💧🪴":"🌱")+"</div>";h+="</div>"}
+ else if(lv==4)h=chip("🔋 Batería: "+s.bat+" kWh",s.bat==40)+'<div class="bar"><i style="width:'+Math.max(0,Math.min(100,s.bat))+'%"></i></div>';
+ else if(lv==5)h=chip(s.hum=="seca"?"🏜️ tierra seca":"🌧️ tierra húmeda")+chip("🚿 riego "+(s.riego?"abierto":"cerrado"),s.riego);
+ else if(lv==6){var E={papel:"📰",plast:"🧴",vidrio:"🍾"},Bn={azul:"🟦",amar:"🟨",verde:"🟩"};h='<div class="pots">';s.items.forEach(function(it,i){h+='<div class="pot">'+(s.idx==i?"🤖":"&nbsp;")+"<br>"+E[it]+"<br>"+(s.out[i]?Bn[s.out[i]]:"·")+"</div>"});h+="</div>"}
+ else if(lv==7){var A=["⬆️","➡️","⬇️","⬅️"];h='<div class="pots" style="display:grid;grid-template-columns:repeat(5,1fr)">';for(var r=0;r<4;r++)for(var q=0;q<5;q++){var g=s.x==q&&s.y==r?"🤖"+A[s.d]:q==2&&r==3?"🪑":q==4&&r==0?"📚":"";h+='<div class="pot" style="min-height:52px;font-size:1.2rem">'+(g||"&nbsp;")+"</div>"}h+="</div>"}
+ else if(lv==8)h=chip("📚 Dentro: "+s.aforo+" de 4",s.aforo>0)+chip("🧑‍🎓 En la puerta: "+s.fila)+'<div class="bar"><i style="width:'+Math.min(100,s.aforo*25)+'%"></i></div>';
+ else h=chip(s.luz=="poca"?"🌙 poca luz":"☀️ mucha luz")+chip(s.pres=="vacia"?"🚪 aula vacía":"🧑‍🎓 aula ocupada")+chip("💡 luces "+(s.luces?"encendidas":"apagadas"),s.luces)+(s.cal!=null?chip("🔥 calefacción "+(s.cal?"encendida":"apagada"),s.cal):"");
+ $("scene").innerHTML=h}
+function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function draw(arr,host){arr.forEach(function(n,i){var d=mk("div","blk "+(n.k?"c":"a")),h=mk("div","hd");
+ if(n.t=="rep"){h.append("repetir ");var p=mk("input");p.type="number";p.min=1;p.max=9;p.value=n.n;p.setAttribute("aria-label","Número de veces");
+  p.onclick=function(e){e.stopPropagation()};p.oninput=function(){n.n=Math.max(1,Math.min(9,+p.value||1))};h.append(p," veces")}
+ else if(n.t=="si"){h.append("si ");var s=mk("select");L[lv].cd.forEach(function(c){var o=mk("option","",C[c][0]);o.value=c;s.append(o)});s.value=n.c;
+  s.onclick=function(e){e.stopPropagation()};s.onchange=function(){n.c=s.value};h.append(s," entonces")}
+ else h.append(B[n.t]);
+ var x=mk("button","x","✕");x.setAttribute("aria-label","Quitar bloque");x.onclick=function(e){e.stopPropagation();arr.splice(i,1);target=prog;render()};h.append(x);d.append(h);
+ if(n.k){var m=mk("div","mouth"+(target===n.k?" act":""));m.onclick=function(e){e.stopPropagation();target=n.k;render()};draw(n.k,m);if(!n.k.length)m.append("pulsa aquí y añade bloques");d.append(m)}
+ host.append(d)})}
+function render(){var p=$("prog");p.innerHTML="";p.className="prog"+(target===prog?" act":"");draw(prog,p);if(!prog.length)p.append("Pulsa un bloque para empezar.");
+ $("hint").textContent=target===prog?"Los bloques nuevos se añaden al final del programa.":"Los bloques nuevos se añaden dentro del bloque marcado. Pulsa el fondo del programa para volver."}
+$("prog").onclick=function(){target=prog;render()};
+function pal(){var p=$("pal");p.innerHTML="";L[lv].bl.forEach(function(t){var b=mk("button",B[t]===1?"c":"a",t=="rep"?"repetir … veces":t=="si"?"si … entonces":B[t]);
+ b.onclick=function(){var n={t:t};if(t=="rep"){n.n=3;n.k=[]}if(t=="si"){n.c=L[lv].cd[0];n.k=[]}target.push(n);if(n.k)target=n.k;render()};p.append(b)})}
+function tabs(){var t=$("tabs");t.innerHTML="";var b=mk("button","alt","← Menú de retos");b.onclick=hub;t.append(b,mk("span","cur2",L[lv].n+" · "+L[lv].t+" "+L[lv].d))}
+function load(){var l=L[lv];prog=[];target=prog;$("mis").innerHTML=l.s+'<p class="goal">'+l.g+"</p>";tabs();pal();render();
+ $("scn").textContent=l.sc[0].n;R(l.sc[0].s);$("next").hidden=true;$("run").hidden=false;res("","Construye tu programa y pulsa Ejecutar.")}
+function res(c,m){var r=$("res");r.className="res "+c;r.innerHTML=m}
+function exec(a,s,t,sn){for(var i=0;i<a.length;i++){var n=a[i];if(sn.length>400)return;
+ if(n.t=="rep"){for(var j=0;j<n.n;j++)exec(n.k,s,t,sn)}else if(n.t=="si"){if(C[n.c][1](s))exec(n.k,s,t,sn)}
+ else{act(n.t,s);t.push(n.t);sn.push(JSON.parse(JSON.stringify(s)))}}}
+$("run").onclick=async function(){if(busy)return;if(!prog.length){res("bad","<b>Programa vacío</b>Añade al menos un bloque.");return}
+ busy=true;res("","Ejecutando…");var l=L[lv],fail=null;
+ for(var k=0;k<l.sc.length&&!fail;k++){var c=l.sc[k],s=JSON.parse(JSON.stringify(c.s)),t=[],sn=[JSON.parse(JSON.stringify(s))];
+  $("scn").textContent=c.n;exec(prog,s,t,sn);for(var j=0;j<sn.length;j++){R(sn[j]);await sleep(320)}
+  var m=l.chk(t,s,c,prog);if(m)fail=m;else await sleep(300)}
+ busy=false;
+ if(fail){res("bad","<b>Todavía no</b>"+fail);return}
+ done[lv]=true;tabs();res("ok","<b>¡Reto superado!</b>"+l.ok);$("run").hidden=true;
+ $("next").hidden=false;$("next").textContent=done.filter(Boolean).length==L.length?"Ver el final":"Volver al menú de retos"};
+function hub(){var g=$("cards"),n=0;g.innerHTML="";[0,1,7,2,4,5,3,6,8].forEach(function(i){var l=L[i];if(done[i])n++;var b=mk("button","card"+(done[i]?" ok":""));b.innerHTML="<b>"+l.n+"</b><span>"+l.t+"</span><i>"+l.d+"</i>"+(done[i]?"<em>✓ Superado</em>":"");b.onclick=function(){lv=i;load();show("game")};g.append(b)});
+ $("prog2").textContent=n+" de "+L.length+" retos superados";$("fin").hidden=n<L.length;show("hub")}
+function show(w){["intro","hub","game","end"].forEach(function(x){$(x).hidden=x!=w});window.scrollTo(0,0)}
+$("next").onclick=function(){if(done.filter(Boolean).length==L.length){show("end")}else{hub()}};
+$("fin").onclick=function(){show("end")};
+$("start").onclick=hub;
+$("again").onclick=function(){done=[];hub()};
+$("clear").onclick=function(){prog=[];target=prog;render()};
+(function(){var cv=$("rain"),x=cv.getContext("2d"),S="ｱｲｳｴｶｷｸｺｻｽ0123456789{}();=<>[]+*".split(""),T=["if","for","=>","//","let","run"],fs=16,w,h,y;
+function W(){w=cv.width=innerWidth;h=cv.height=innerHeight;y=[];for(var i=0;i<Math.ceil(w/fs);i++)y.push(Math.random()*-40);x.fillStyle="#020a05";x.fillRect(0,0,w,h)}
+function F(){x.fillStyle="rgba(2,10,5,.1)";x.fillRect(0,0,w,h);x.font=fs+"px 'Share Tech Mono',monospace";
+ for(var i=0;i<y.length;i++){var t=Math.random()<.04?T[Math.floor(Math.random()*T.length)]:S[Math.floor(Math.random()*S.length)];
+  x.fillStyle=Math.random()<.08?"#D5FFE4":"#00E070";x.fillText(t,i*fs,y[i]*fs);
+  if(y[i]*fs>h&&Math.random()>.975)y[i]=0;y[i]+=1}}
+W();addEventListener("resize",W);
+if(matchMedia("(prefers-reduced-motion: reduce)").matches){for(var k=0;k<60;k++)F()}else setInterval(F,60)})();
+show("intro");
+</script>
+</body>
+</html>
